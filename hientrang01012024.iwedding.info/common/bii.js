@@ -174,22 +174,37 @@ window.onload = (event) => {
 };
 
 if (biicore.alert && Object.keys(biicore.alert).length > 0 && biicore.alert.status == 1) {
-    setTimeout(function() {
-        Swal.fire({
-            title: biicore.alert.title,
-            html: biicore.alert.content,
-            showCloseButton: false,
-            showConfirmButton: false,
-            showCancelButton: true,
-            focusCancel: true,
-            cancelButtonText: (typeof biicore.alert.cancel_button_text != 'undefined' && biicore.alert.cancel_button_text != '') ? biicore.alert.cancel_button_text : 'Tắt thông báo',
-        });
-    }, biicore.alert.timeout);
+    Swal.fire({
+        title: biicore.alert.title,
+        html: biicore.alert.content,
+        showCloseButton: false,
+        showConfirmButton: false,
+        showCancelButton: true,
+        focusCancel: true,
+        cancelButtonText: (typeof biicore.alert.cancel_button_text != 'undefined' && biicore.alert.cancel_button_text != '') ? biicore.alert.cancel_button_text : 'Tắt thông báo',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didClose: function() {
+            // Phát nhạc khi tắt thông báo
+            if (window.audioPlayer) {
+                audioPlayer.muted = false;
+                audioPlayer.play().catch(()=>{});
+                var off = document.getElementById("playerVolumeOff");
+                var on = document.getElementById("playerVolumeOn");
+                if (off && on) {
+                    off.style.display = "none";
+                    on.style.display = "block";
+                }
+            }
+        }
+    });
 }
 
 if (biicore.bgMusic) {
     var audioPlayer = document.createElement("AUDIO");
+    window.audioPlayer = audioPlayer;
     audioPlayer.style.display = "none";
+    audioPlayer.muted = true;
 
     setTimeout(function() {
         if (audioPlayer.canPlayType("audio/mpeg")) {
