@@ -8421,7 +8421,8 @@ img {
 }
 
 .donate-box .donate-card .qr-code-image {
-  max-width: 150px;
+  /* max-width: 150px; */
+  height: 300px;
   border: 1px solid #ccc;
   padding: 3px;
   margin: auto;
