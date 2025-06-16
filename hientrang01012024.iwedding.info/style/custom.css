@@ -23,3 +23,9 @@
 .donate-box .donate-card .qr-code-image {
   aspect-ratio: 0.5 !important;
 }
+
+@media screen and (max-width: 600px) {
+  .title-mobile {
+    margin-top: 70px !important;
+  }
+}
